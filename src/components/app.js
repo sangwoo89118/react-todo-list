@@ -15,12 +15,23 @@ class App extends React.Component {
         };
 
         this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     addItem(item){
         item.complete = false;
         this.setState({
             todoData: [item, ...this.state.todoData]
+        })
+    }
+
+    deleteItem(index){
+        const tempData = this.state.todoData.slice();
+
+        tempData.splice(index, 1);
+
+        this.setState({
+            todoData: tempData
         })
     }
 
@@ -33,7 +44,7 @@ class App extends React.Component {
             <div className="container">
                 <h1 className="center-align">To Do List</h1>
                 <AddItem onAdd={this.addItem}/>
-                <ListContainer list={todoData}/>
+                <ListContainer delete={this.deleteItem} list={todoData}/>
             </div>
         )
     }

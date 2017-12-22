@@ -16,6 +16,7 @@ class App extends React.Component {
 
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.toggleComplete = this.toggleComplete.bind(this);
     }
 
     addItem(item){
@@ -35,6 +36,17 @@ class App extends React.Component {
         })
     }
 
+    toggleComplete(index){
+        const tempData = this.state.todoData.slice();
+
+        tempData[index].complete = !tempData[index].complete;
+
+        this.setState({
+            todoData: tempData
+        })
+
+    }
+
     render() {
 
         const{todoData} = this.state;
@@ -44,7 +56,7 @@ class App extends React.Component {
             <div className="container">
                 <h1 className="center-align">To Do List</h1>
                 <AddItem onAdd={this.addItem}/>
-                <ListContainer delete={this.deleteItem} list={todoData}/>
+                <ListContainer delete={this.deleteItem} list={todoData} toggleComplete={this.toggleComplete}/>
             </div>
         )
     }

@@ -3,23 +3,53 @@ import React, {Component} from 'react';
 import '../assets/css/modal.css';
 
 export default class Modal extends Component{
-    render(){
-        return(
-            <div className="confirm-modal">
-                <div className="modal-content">
+    constructor(props){
+        super(props);
 
-                        <div className="card">
-                            <div className="card-content">
-                                <p>This is some text about stuff!</p>
-                            </div>
-                            <div className="card-action">
-                                <button className="btn green">Confirm</button>
-                                <button className="btn red">Cancel</button>
+        this.state = {
+            visible: false
+        }
+
+        this.handleConfirm = this.handleConfirm.bind(this);
+    }
+
+    handleConfirm(){
+        this.props.callback();
+
+        this.setState({
+            visible: false
+        });
+    }
+
+
+    render(){
+        const button = (
+            <button onClick={() => this.setState({visible: true})} className={this.props.className ? this.props.className : 'btn'}>
+                {this.props.children ? this.props.children : 'Click Me'}
+            </button>
+    );
+
+        if(this.state.visible) {
+            return (
+                <span>
+                    {button}
+                    <div className="confirm-modal">
+                        <div className="modal-content">
+                            <div className="card">
+                                <div className="card-content">
+                                    {this.props.text}
+                                </div>
+                                <div className="card-action">
+                                    <button onClick={this.handleConfirm} className="btn green">Confirm</button>
+                                    <button onClick={() => this.setState({visible: false})} className="btn red">Cancel</button>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </span>
+            );
+        }
 
-                </div>
-            </div>
-        );
+        return button;
     }
 }

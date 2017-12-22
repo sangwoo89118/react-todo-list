@@ -16,7 +16,7 @@ export default class ListContainer extends Component{
         return(
             <div>
                 <ul className="collection">
-                    {list}
+                    {list.length ? list: <li className="collection-item center-align">No To Do Items</li>}
                 </ul>
             </div>
         )
